@@ -1,0 +1,100 @@
+﻿@model (List<AuthenticationLogin.Models.User> users, User user)
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <label>Hello, @Model.user.Name</label>
+                        <form method="post" action="@Url.Action("Logout", "User")" style="display: inline;">
+                            <button type="submit" class="btn alert-info" style="height: 40px; margin:15px">
+                                Logout
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container mt-5">
+    <div class="toolbar">
+        <form method="post" action="@Url.Action("Block", "User", new { Model.user.Id, Model.user.Name})" style="display: inline;" id="blockForm">
+            <button type="submit" class="btn btn-danger">
+                Block
+                <i class="fas fa-lock"></i>
+            </button>
+            <input type="hidden" name="userIds" id="blockUserIds">
+        </form>
+        <form method="post" action="@Url.Action("Unlock", "User", new { Model.user.Id, Model.user.Name})" style="display: inline;" id="unlockForm">
+            <button type="submit" class="btn alert-info">
+                <i class="fas fa-unlock-alt"></i>
+            </button>
+            <input type="hidden" name="userIds" id="unlockUserIds">
+        </form>
+        <form method="post" action="@Url.Action("Delete", "User", new { Model.user.Id, Model.user.Name})" style="display: inline;" id="deleteForm">
+            <button type="submit" class="btn alert-info">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+            <input type="hidden" name="userIds" id="deleteUserIds">
+        </form>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th><input type="checkbox" id="selectAll"></th>
+                <th>Name</th>
+                <th>e-Mail</th>
+                <th>Last login</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.users)
+            {
+                <tr>
+                    <td><input type="checkbox" name="selectedUsers" value="@user.Id"></td>
+                    <td>@user.Name<br><small>@user.Position</small></td>
+                    <td>@user.Email</td>
+                    <td>@user.LastLoginTime.ToString()</td>
+                    <td>@user.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script>
+    document.getElementById('selectAll').onclick = function () {
+        var checkboxes = document.querySelectorAll('input[name="selectedUsers"]');
+        for (var checkbox of checkboxes) {
+            checkbox.checked = this.checked;
+        }
+    }
+
+    function collectSelectedUserIds() {
+        var selectedIds = [];
+        document.querySelectorAll('input[name="selectedUsers"]:checked').forEach(checkbox => {
+            selectedIds.push(parseInt(checkbox.value));
+        });
+        return selectedIds;
+    }
+
+    document.getElementById('blockForm').onsubmit = function () {
+        document.getElementById('blockUserIds').value = JSON.stringify(collectSelectedUserIds());
+    }
+
+    document.getElementById('unlockForm').onsubmit = function () {
+        document.getElementById('unlockUserIds').value = JSON.stringify(collectSelectedUserIds());
+    }
+
+    document.getElementById('deleteForm').onsubmit = function () {
+        document.getElementById('deleteUserIds').value = JSON.stringify(collectSelectedUserIds());
+    }
+</script>

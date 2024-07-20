@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - User Registry</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AuthenticationLogin.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: white; 
+        }
+
+        .toolbar {
+            position: sticky;
+            top: 85px; 
+            z-index: 999;
+            background-color: white;
+            padding: 10px 0;
+            margin-bottom: 10px;
+            margin-top: 80px;
+        }
+            .toolbar button {
+                margin-right: 5px;
+            }
+
+        .container {
+            margin-top: 70px; 
+        }
+
+        .table td, .table th {
+            vertical-align: middle;
+        }
+
+        .left-align {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 100%; 
+            padding: 10px;
+        }
+
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 850px;
+            max-width: 400px;
+        }
+
+            .login-container .btn-login {
+                background: linear-gradient(to right, #3a7bd5, #3a6073);
+                border: none;
+                color: white;
+            }
+
+                .login-container .btn-login:hover {
+                    background: linear-gradient(to right, #3a6073, #3a7bd5);
+                }
+
+            .login-container .form-control {
+                border: none;
+                border-bottom: 2px solid #ddd;
+                border-radius: 0;
+                margin-bottom: 20px;
+            }
+
+                .login-container .form-control:focus {
+                    box-shadow: none;
+                    border-color: #3a7bd5;
+                }
+
+        .sticky-placeholder {
+            height: 60px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div> 
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

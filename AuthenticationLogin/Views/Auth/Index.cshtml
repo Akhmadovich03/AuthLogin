@@ -1,0 +1,34 @@
+﻿@model string?
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="login-container">
+    <h2 class="text-center">Login</h2>
+
+    @if (Model is not null)
+    {
+        <div class="alert alert-info text-center" role="alert">
+            @Model
+        </div>
+    }
+
+    <form method="post" action="@Url.Action("Login", "Auth")">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-login btn-block">Login</button>
+    </form>
+    <div class="text-center mt-3">
+        <a href="@Url.Action("ChangingPassword", "Auth")">Forgot <strong>Password?</strong></a>
+    </div>
+    <div class="text-center mt-2">
+        Don't have an account? <a href="@Url.Action("SignUp", "Auth")">Sign up</a>
+    </div>
+</div>
